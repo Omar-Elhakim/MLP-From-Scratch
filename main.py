@@ -59,7 +59,6 @@ if __name__ == "__main__":
     hpParameters = st.columns(2)
     with hpParameters[0]:
         lr = float(st.text_input("Learning Rate", value=1e-3))
-        st.write(lr)
     with hpParameters[1]:
         epochs = st.number_input("Number of Epochs", value=50)
 
@@ -87,6 +86,7 @@ if __name__ == "__main__":
         accurecies.append(acc / len(xTrain))
 
     fig = px.line(accurecies)
+    fig.update_layout(xaxis_title="Epochs", yaxis_title="Accuracy")
     st.plotly_chart(fig)
 
     # Start Testing
