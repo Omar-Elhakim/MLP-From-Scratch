@@ -71,3 +71,7 @@ mlp.ipynb       # Notebook version for experimentation
 penguins.csv    # Dataset (3 species, 5 numeric features)
 requirements.txt
 ```
+
+## License
+
+Released under the [MIT License](LICENSE).
