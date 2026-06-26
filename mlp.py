@@ -116,13 +116,10 @@ class MLP:
             for i in range(
                 self.errors[j - 1].shape[0]
             ):  # number of neurons in that layer
-                s = (self.errors[j].dot(self.weights[j][i, :])) + (
-                    self.bias[j - 1][i] if self.useBias else 0
-                )  # s means sigma
-                # don't know why but it errors out when i use bias[j][i] with [5,2,4(>2),3(<4)] or similar arch.
+                # s (sigma) is the error signal propagated back through the
+                # weights; bias is updated separately and plays no role here.
+                s = self.errors[j].dot(self.weights[j][i, :])
                 self.errors[j - 1][i] = s * self.act_d(self.neuronsOutput[j][i])
-
-    # I LOVE obfuscated code
 
     def updateWeights(self):
         for i in range(len(self.weights)):
