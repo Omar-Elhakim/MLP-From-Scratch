@@ -1,4 +1,4 @@
-# DL-and-NN
+# Penguin MLP from Scratch
 
 A multilayer perceptron (MLP) built from scratch in NumPy, with an interactive Streamlit GUI, that classifies penguin species.
 
