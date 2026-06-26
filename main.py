@@ -17,19 +17,20 @@ if __name__ == "__main__":
     # Reading the data
     data = pd.read_csv("penguins.csv")
 
-    # print(data["Species"].value_counts())
-    # There's 8 values missing , we will impute them by the column mean
-    # print(data.notna().sum().sum())
-
+    # There are 8 missing values; impute them with the column mean.
     data.fillna(data.mean(numeric_only=True), inplace=True)
 
-    le = LabelEncoder()
-    data["OriginLocation"] = le.fit_transform(data["OriginLocation"])
-    data["Species"] = le.fit_transform(data["Species"])
+    # Use a separate encoder per column so each keeps its own label mapping.
+    location_encoder = LabelEncoder()
+    species_encoder = LabelEncoder()
+    data["OriginLocation"] = location_encoder.fit_transform(data["OriginLocation"])
+    data["Species"] = species_encoder.fit_transform(data["Species"])
 
-    numeric_cols = data.columns.drop(["OriginLocation", "Species"])
+    # Standardize every input feature (including the encoded location) so they
+    # all reach the network on a comparable scale.
+    feature_cols = data.columns.drop("Species")
     scaler = StandardScaler()
-    data[numeric_cols] = scaler.fit_transform(data[numeric_cols])
+    data[feature_cols] = scaler.fit_transform(data[feature_cols])
 
     # First 30 samples of every species is taken as training data and the rest is for testing
 
