@@ -32,17 +32,11 @@ class MLP:
 
     def Init(self):
         self.weights = self.initWeights(self.layerSizes)
-        # print("Weights: \n" + str(self.weights))
-
         self.neuronsOutput = self.initNeuronsOutput()
-        # print("Outputs: \n" + str(self.neuronsOutput))
-
         self.errors = self.initErrors()
-        # print("Errors: \n" + str(self.errors))
 
         if self.useBias:
             self.bias = self.initBias()
-            # print("Bias: \n" + str(self.bias))
 
         self.act_d = self.sigmoid_d if self.act == self.sigmoid else self.tanh_d
 
@@ -75,18 +69,20 @@ class MLP:
         return bias
 
     def initNeuronsOutput(self):
+        # Placeholders; every entry is overwritten during feedForward.
         neuronsOutput = []
-        neuronsOutput.append(np.random.random(self.noOfInputs))
+        neuronsOutput.append(np.zeros(self.noOfInputs))
         for l in self.layerSizes:
-            neuronsOutput.append(np.random.random(l))
-        neuronsOutput.append(np.random.random(self.noOfOutputs))
+            neuronsOutput.append(np.zeros(l))
+        neuronsOutput.append(np.zeros(self.noOfOutputs))
         return neuronsOutput
 
     def initErrors(self):
+        # Placeholders; every entry is overwritten during backPropagation.
         errors = []
         for l in self.layerSizes:
-            errors.append(np.random.random(l))
-        errors.append(np.random.random(self.noOfOutputs))
+            errors.append(np.zeros(l))
+        errors.append(np.zeros(self.noOfOutputs))
         return errors
 
     """
@@ -151,7 +147,3 @@ class MLP:
             self.feedForward()
             y.append(self.neuronsOutput[-1].argmax())
         return y
-
-        # acc += 1
-        # return acc
-        # accurecies.append(acc / len(xTrain))
